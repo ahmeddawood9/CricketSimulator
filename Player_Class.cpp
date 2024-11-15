@@ -1,9 +1,9 @@
 #include<iostream>
 using namespace std;
-//Class 1
-//Defining a class for player
+
+// Class 1: Defining a class for Player
 class Player {
-private : // private attributes below there
+private:
     string name;
     int age;
     int runsScored;
@@ -11,8 +11,11 @@ private : // private attributes below there
     int battingSkill;
     int bowlingSkill;
     string role;
-public : // Public attributes below down there
-    Player(string name="NA", int age=0, int battingSkill=0, int bowlingSkill=0, string role="NA") {
+    int matchesPlayed; // added extra because of part 4
+    float battingAverage; // added extra because of part 4
+
+public:
+    Player(string name = "NA", int age = 0, int battingSkill = 0, int bowlingSkill = 0, string role = "NA") {
         this->name = name;
         this->age = age;
         this->runsScored = 0;
@@ -20,42 +23,59 @@ public : // Public attributes below down there
         this->battingSkill = battingSkill;
         this->bowlingSkill = bowlingSkill;
         this->role = role;
-    }
-    //copy constructor
-    Player(const Player& other) {
-        this->name = other.name;
-        this->age = other.age;
-        this->runsScored = other.runsScored;
-        this->wicketsTaken = other.wicketsTaken;
-        this->battingSkill = other.battingSkill;
-        this->bowlingSkill = other.bowlingSkill;
-        this->role = other.role;
+        matchesPlayed = 0;
+        battingAverage = 0.0;
     }
 
-
-    // a method to display player information
     void displayInfo();
-
+    int getRuns();
+    int getWickets();
+    int getBattingSkill();
+    int getBowlingSkill();
+    void updateStatistics(int runs, int wickets);
+    string getName() {
+        return name;  // Added this method to get player name
+    }
 };
-Player* createPlayer(string& name,int age,int battingSkill,int bowlingSkill,string& role) {
 
-    Player* obj = new Player(name, age, battingSkill, bowlingSkill, role);
-    return obj;
-
+int Player::getRuns() {
+    return runsScored;
 }
 
-void Player :: displayInfo () {
-    cout << "Name: " <<name<< endl;
-    cout << "Age: " <<age<< endl;
-    cout << "Runs Scored: " <<runsScored<< endl;
-    cout << "Wickes Taken: " <<wicketsTaken<< endl;
-    cout << "Batting Skill: " <<battingSkill<< endl;
-    cout << "Bowling Skill: " <<bowlingSkill<< endl;
-    cout << "Role : " <<role<< endl;
-
-
+int Player::getWickets() {
+    return wicketsTaken;
 }
 
+int Player::getBattingSkill() {
+    return battingSkill;
+}
+
+int Player::getBowlingSkill() {
+    return bowlingSkill;
+}
+
+void Player::updateStatistics(int runs, int wickets) {
+    runsScored += runs;
+    wicketsTaken += wickets;
+    matchesPlayed++;
+    // Simple float division for batting average calculation
+    if (matchesPlayed > 0) {
+        battingAverage = (float)runsScored / matchesPlayed; // we have used casting to convert int to float
+    }
+}
+
+void Player::displayInfo() {
+    cout << "Player Info:\n";
+    cout << "Name: " << name << "\n";
+    cout << "Age: " << age << "\n";
+    cout << "Role: " << role << "\n";
+    cout << "Runs Scored: " << runsScored << "\n";
+    cout << "Wickets Taken: " << wicketsTaken << "\n";
+    cout << "Batting Skill: " << battingSkill << "\n";
+    cout << "Bowling Skill: " << bowlingSkill << "\n";
+    cout << "Matches Played: " << matchesPlayed << "\n";
+    cout << "Batting Average: " << battingAverage << "\n";
+}
 
 int main() {
     string playerName;
@@ -65,7 +85,7 @@ int main() {
 
     // Taking input from the user
     cout << "Enter player name: ";
-    cin>>playerName; // Use getline to allow names with spaces
+    cin >> playerName; // Use getline to allow names with spaces
     cout << "Enter player age: ";
     cin >> playerAge; // Input age
 
@@ -88,11 +108,10 @@ int main() {
     } while (bowlingSkill < 1 || bowlingSkill > 10);
 
     cout << "Enter player role: ";
+    cin >> playerRole; // taking input for player role
 
-    cin>>playerRole;// taking input for player role
-
-    // Create a player using the createPlayer function
-    Player* player = createPlayer(playerName, playerAge, battingSkill, bowlingSkill, playerRole);
+    // Create a player using the constructor directly
+    Player* player = new Player(playerName, playerAge, battingSkill, bowlingSkill, playerRole);
 
     // Display player information
     player->displayInfo(); // Displaying player info using the dynamically created object
