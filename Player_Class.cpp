@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+//part 1
 
 // Class 1: Defining a class for Player
 class Player {
