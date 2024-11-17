@@ -78,47 +78,4 @@ void Player::displayInfo() {
     cout << "Batting Average: " << battingAverage << "\n";
 }
 
-int main() {
-    string playerName;
-    string playerRole;
-    int playerAge;
-    int battingSkill, bowlingSkill; // Variables to store skill ratings
 
-    // Taking input from the user
-    cout << "Enter player name: ";
-    cin >> playerName; // Use getline to allow names with spaces
-    cout << "Enter player age: ";
-    cin >> playerAge; // Input age
-
-    // Input and validate batting skill
-    do {
-        cout << "Enter batting skill (1-10): ";
-        cin >> battingSkill;
-        if (battingSkill < 1 || battingSkill > 10) {
-            cout << "Invalid input! Please enter a skill between 1 and 10." << endl;
-        }
-    } while (battingSkill < 1 || battingSkill > 10);
-
-    // Input and validate bowling skill
-    do {
-        cout << "Enter bowling skill (1-10): ";
-        cin >> bowlingSkill;
-        if (bowlingSkill < 1 || bowlingSkill > 10) {
-            cout << "Invalid input! Please enter a skill between 1 and 10." << endl;
-        }
-    } while (bowlingSkill < 1 || bowlingSkill > 10);
-
-    cout << "Enter player role: ";
-    cin >> playerRole; // taking input for player role
-
-    // Create a player using the constructor directly
-    Player* player = new Player(playerName, playerAge, battingSkill, bowlingSkill, playerRole);
-
-    // Display player information
-    player->displayInfo(); // Displaying player info using the dynamically created object
-
-    // Clean up dynamically allocated memory
-    delete player; // Freeing memory to avoid memory leaks
-
-    return 0;
-}
